@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
+import './question.dart';
+
 void main() {
   runApp(const ProjetoFlutterApp());
 }
 
 class ProjetoFlutterState extends State<ProjetoFlutterApp> {
-  var indexPergunta = 0;
+  var questionIndex = 0;
 
-  void responder() {
+  void answer() {
     setState(() {
-      indexPergunta++;
+      questionIndex++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final perguntas = [
+    final questions = [
       'Qual a sua cor favorita?',
       'Qual o nome do seu cachorro?',
       'Qual o seu anime favorito?'
@@ -29,18 +31,18 @@ class ProjetoFlutterState extends State<ProjetoFlutterApp> {
         ),
         body: Column(
           children: [
-            Text(perguntas[indexPergunta]),
+            Question(label: questions[questionIndex]),
             ElevatedButton(
-                onPressed: responder,
-                child: const Text('Resposta 1')
+              onPressed: answer,
+              child: const Text('Alternative 1'),
             ),
             ElevatedButton(
-                onPressed: responder,
-                child: const Text('Resposta 2')
+              onPressed: answer,
+              child: const Text('Alternative 2'),
             ),
             ElevatedButton(
-                onPressed: responder,
-                child: const Text('Resposta 3')
+              onPressed: answer,
+              child: const Text('Alternative 3'),
             )
           ],
         ),
@@ -50,12 +52,10 @@ class ProjetoFlutterState extends State<ProjetoFlutterApp> {
 }
 
 class ProjetoFlutterApp extends StatefulWidget {
-
   const ProjetoFlutterApp({super.key});
 
   @override
   ProjetoFlutterState createState() {
     return ProjetoFlutterState();
   }
-
 }
