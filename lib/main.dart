@@ -18,11 +18,23 @@ class ProjetoFlutterState extends State<ProjetoFlutterApp> {
 
   @override
   Widget build(BuildContext context) {
-    final questions = [
-      'Qual a sua cor favorita?',
-      'Qual o nome do seu cachorro?',
-      'Qual o seu anime favorito?'
+    final List<Map<String, Object>> questions = [
+      {
+        'label': 'Qual a sua cor favorita?',
+        'answers': ['Azul', 'Verde', 'Roxo'],
+      },
+      {
+        'label': 'Qual o nome do seu cachorro?',
+        'answers': ['Caramelo', 'Bolinha', 'Doguinho'],
+      },
+      {
+        'label': 'Qual o seu anime favorito?',
+        'answers': ['Naruto', 'Hunter X Hunter', 'One Piece'],
+      },
     ];
+
+    List<Answer>? answers = (questions[questionIndex]['answers'] as List<String>?)
+        ?.map((answer) => Answer(label: answer, onSelection: _changeQuestion)).toList();
 
     return MaterialApp(
       home: Scaffold(
@@ -32,19 +44,8 @@ class ProjetoFlutterState extends State<ProjetoFlutterApp> {
         ),
         body: Column(
           children: [
-            Question(label: questions[questionIndex]),
-            Answer(
-              label: 'Answer 01',
-              onSelection: _changeQuestion,
-            ),
-            Answer(
-              label: 'Answer 02',
-              onSelection: _changeQuestion,
-            ),
-            Answer(
-              label: 'Answer 03',
-              onSelection: _changeQuestion,
-            ),
+            Question(label: questions[questionIndex]['label'].toString()),
+            ...?answers,
           ],
         ),
       ),
