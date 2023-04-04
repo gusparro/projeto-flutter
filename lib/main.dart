@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './question.dart';
+import './answer.dart';
 
 void main() {
   runApp(const ProjetoFlutterApp());
@@ -9,7 +10,7 @@ void main() {
 class ProjetoFlutterState extends State<ProjetoFlutterApp> {
   var questionIndex = 0;
 
-  void answer() {
+  void _changeQuestion() {
     setState(() {
       questionIndex++;
     });
@@ -32,18 +33,18 @@ class ProjetoFlutterState extends State<ProjetoFlutterApp> {
         body: Column(
           children: [
             Question(label: questions[questionIndex]),
-            ElevatedButton(
-              onPressed: answer,
-              child: const Text('Alternative 1'),
+            Answer(
+              label: 'Answer 01',
+              onSelection: _changeQuestion,
             ),
-            ElevatedButton(
-              onPressed: answer,
-              child: const Text('Alternative 2'),
+            Answer(
+              label: 'Answer 02',
+              onSelection: _changeQuestion,
             ),
-            ElevatedButton(
-              onPressed: answer,
-              child: const Text('Alternative 3'),
-            )
+            Answer(
+              label: 'Answer 03',
+              onSelection: _changeQuestion,
+            ),
           ],
         ),
       ),
