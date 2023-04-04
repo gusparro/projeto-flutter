@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_flutter/quiz.dart';
 import 'package:projeto_flutter/result.dart';
-
-import './question.dart';
-import './answer.dart';
 
 void main() {
   runApp(const ProjetoFlutterApp());
@@ -40,13 +38,6 @@ class ProjetoFlutterState extends State<ProjetoFlutterApp> {
 
   @override
   Widget build(BuildContext context) {
-    List<Answer>? answers = areThereMoreQuestions
-        ? (_questions[questionIndex]['answers'] as List<String>?)
-            ?.map(
-                (answer) => Answer(label: answer, onSelection: _changeQuestion))
-            .toList()
-        : null;
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -54,13 +45,11 @@ class ProjetoFlutterState extends State<ProjetoFlutterApp> {
           centerTitle: true,
         ),
         body: areThereMoreQuestions
-            ? Column(
-                children: [
-                  Question(
-                    label: _questions[questionIndex]['label'].toString(),
-                  ),
-                  ...?answers,
-                ],
+            ? Quiz(
+                questions: _questions,
+                questionIndex: questionIndex,
+                onSelection: _changeQuestion,
+                areThereMoreQuestions: areThereMoreQuestions,
               )
             : const Result(),
       ),
