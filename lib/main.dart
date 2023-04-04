@@ -8,47 +8,68 @@ void main() {
 }
 
 class ProjetoFlutterState extends State<ProjetoFlutterApp> {
+  final List<Map<String, Object>> _questions = const [
+    {
+      'label': 'Qual a sua cor favorita?',
+      'answers': ['Azul', 'Verde', 'Roxo'],
+    },
+    {
+      'label': 'Qual o nome do seu cachorro?',
+      'answers': ['Caramelo', 'Bolinha', 'Doguinho'],
+    },
+    {
+      'label': 'Qual o seu anime favorito?',
+      'answers': ['Naruto', 'Hunter X Hunter', 'One Piece'],
+    },
+  ];
+
   var questionIndex = 0;
 
+  bool get areThereMoreQuestions {
+    return questionIndex < _questions.length;
+  }
+
   void _changeQuestion() {
-    setState(() {
-      questionIndex++;
-    });
+    if (areThereMoreQuestions) {
+      setState(() {
+        questionIndex++;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, Object>> questions = [
-      {
-        'label': 'Qual a sua cor favorita?',
-        'answers': ['Azul', 'Verde', 'Roxo'],
-      },
-      {
-        'label': 'Qual o nome do seu cachorro?',
-        'answers': ['Caramelo', 'Bolinha', 'Doguinho'],
-      },
-      {
-        'label': 'Qual o seu anime favorito?',
-        'answers': ['Naruto', 'Hunter X Hunter', 'One Piece'],
-      },
-    ];
-
-    List<Answer>? answers = (questions[questionIndex]['answers'] as List<String>?)
-        ?.map((answer) => Answer(label: answer, onSelection: _changeQuestion)).toList();
+    List<Answer>? answers = areThereMoreQuestions
+        ? (_questions[questionIndex]['answers'] as List<String>?)
+            ?.map(
+                (answer) => Answer(label: answer, onSelection: _changeQuestion))
+            .toList()
+        : null;
 
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Projeto Flutter'),
-          centerTitle: true,
-        ),
-        body: Column(
-          children: [
-            Question(label: questions[questionIndex]['label'].toString()),
-            ...?answers,
-          ],
-        ),
-      ),
+          appBar: AppBar(
+            title: const Text('Projeto Flutter'),
+            centerTitle: true,
+          ),
+          body: areThereMoreQuestions
+              ? Column(
+                  children: [
+                    Question(
+                      label: _questions[questionIndex]['label'].toString(),
+                    ),
+                    ...?answers,
+                  ],
+                )
+              : const Center(
+                  child: Text(
+                    'Sem mais perguntas.',
+                    style: TextStyle(
+                      fontSize: 28,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                )),
     );
   }
 }
