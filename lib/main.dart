@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_flutter/result.dart';
 
 import './question.dart';
 import './answer.dart';
@@ -48,28 +49,21 @@ class ProjetoFlutterState extends State<ProjetoFlutterApp> {
 
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Projeto Flutter'),
-            centerTitle: true,
-          ),
-          body: areThereMoreQuestions
-              ? Column(
-                  children: [
-                    Question(
-                      label: _questions[questionIndex]['label'].toString(),
-                    ),
-                    ...?answers,
-                  ],
-                )
-              : const Center(
-                  child: Text(
-                    'Sem mais perguntas.',
-                    style: TextStyle(
-                      fontSize: 28,
-                    ),
-                    textAlign: TextAlign.center,
+        appBar: AppBar(
+          title: const Text('Projeto Flutter'),
+          centerTitle: true,
+        ),
+        body: areThereMoreQuestions
+            ? Column(
+                children: [
+                  Question(
+                    label: _questions[questionIndex]['label'].toString(),
                   ),
-                )),
+                  ...?answers,
+                ],
+              )
+            : const Result(),
+      ),
     );
   }
 }
