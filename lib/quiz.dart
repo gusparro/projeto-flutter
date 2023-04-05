@@ -7,7 +7,7 @@ class Quiz extends StatelessWidget {
   final List<Map<String, Object>> questions;
   final int questionIndex;
   final bool areThereMoreQuestions;
-  final void Function() onSelection;
+  final void Function(int) onSelection;
 
   const Quiz({
     Key? key,
@@ -20,10 +20,15 @@ class Quiz extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Answer>? answers = areThereMoreQuestions
-        ? (questions[questionIndex]['answers'] as List<String>?)
+        ? (questions[questionIndex]['answers'] as List<Map<String, Object>>?)
             ?.map(
-                (answer) => Answer(label: answer, onSelection: onSelection))
-            .toList()
+              (answer) {
+                return Answer(
+                  label: answer['label'].toString(),
+                  onSelection: () => onSelection(int.parse(answer['value'].toString())),
+                );
+              }
+            ).toList()
         : null;
 
     return Column(

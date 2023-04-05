@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class Result extends StatelessWidget {
-  const Result({Key? key}) : super(key: key);
+  final int punctuation;
+
+  const Result({Key? key, required this.punctuation}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Text(
-        'Sem mais perguntas.',
-        style: TextStyle(
-          fontSize: 28,
+        'Parabéns, sua pontuação foi de $punctuation pontos.',
+        style: const TextStyle(
+          fontSize: 26,
         ),
         textAlign: TextAlign.center,
       ),

@@ -10,28 +10,81 @@ class ProjetoFlutterState extends State<ProjetoFlutterApp> {
   final List<Map<String, Object>> _questions = const [
     {
       'label': 'Qual a sua cor favorita?',
-      'answers': ['Azul', 'Verde', 'Roxo'],
+      'answers': [
+        {
+          'label': 'Azul',
+          'value': 6,
+        },
+        {
+          'label': 'Verde',
+          'value': 10,
+        },
+        {
+          'label': 'Roxo',
+          'value': 5,
+        },
+        {
+          'label': 'Preto',
+          'value': 8,
+        },
+      ],
     },
     {
       'label': 'Qual o nome do seu cachorro?',
-      'answers': ['Caramelo', 'Bolinha', 'Doguinho'],
+      'answers': [
+        {
+          'label': 'Caramelo',
+          'value': 10,
+        },
+        {
+          'label': 'Bolinha',
+          'value': 6,
+        },
+        {
+          'label': 'Doguinho',
+          'value': 7,
+        },
+        {
+          'label': 'Pretinho',
+          'value': 4,
+        },
+      ],
     },
     {
       'label': 'Qual o seu anime favorito?',
-      'answers': ['Naruto', 'Hunter X Hunter', 'One Piece'],
+      'answers': [
+        {
+          'label': 'Naruto',
+          'value': 8,
+        },
+        {
+          'label': 'Hunter X Hunter',
+          'value': 10,
+        },
+        {
+          'label': 'One Piece',
+          'value': 7,
+        },
+        {
+          'label': 'Black Clover',
+          'value': 4,
+        },
+      ],
     },
   ];
 
-  var questionIndex = 0;
+  int _questionIndex = 0;
+  int _totalPunctuation = 0;
 
   bool get areThereMoreQuestions {
-    return questionIndex < _questions.length;
+    return _questionIndex < _questions.length;
   }
 
-  void _changeQuestion() {
+  void _nextQuestion(int punctuation) {
     if (areThereMoreQuestions) {
       setState(() {
-        questionIndex++;
+        _questionIndex++;
+        _totalPunctuation += punctuation;
       });
     }
   }
@@ -47,11 +100,11 @@ class ProjetoFlutterState extends State<ProjetoFlutterApp> {
         body: areThereMoreQuestions
             ? Quiz(
                 questions: _questions,
-                questionIndex: questionIndex,
-                onSelection: _changeQuestion,
+                questionIndex: _questionIndex,
+                onSelection: _nextQuestion,
                 areThereMoreQuestions: areThereMoreQuestions,
               )
-            : const Result(),
+            : Result(punctuation: _totalPunctuation),
       ),
     );
   }
