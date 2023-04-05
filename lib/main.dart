@@ -89,6 +89,13 @@ class ProjetoFlutterState extends State<ProjetoFlutterApp> {
     }
   }
 
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalPunctuation = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -104,7 +111,7 @@ class ProjetoFlutterState extends State<ProjetoFlutterApp> {
                 onSelection: _nextQuestion,
                 areThereMoreQuestions: areThereMoreQuestions,
               )
-            : Result(punctuation: _totalPunctuation),
+            : Result(punctuation: _totalPunctuation, onReset: _resetQuiz),
       ),
     );
   }
